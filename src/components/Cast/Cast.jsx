@@ -12,15 +12,10 @@ const Cast = () => {
   useEffect(() => {
     const fetchCast = async () => {
       try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
-              Accept: 'application/json',
-            },
-          }
-        );
+        // Include cheia API direct în URL
+        const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US&api_key=b3fe8ad645f337f3fa9ceb8e5b164aa5`;
+
+        const response = await axios.get(url);
         setCast(response.data.cast);
         setError(false);
       } catch (error) {
@@ -31,6 +26,7 @@ const Cast = () => {
 
     fetchCast();
   }, [movieId]);
+
 
   if (error) {
     return <div>Error loading cast information. Please try again later.</div>;

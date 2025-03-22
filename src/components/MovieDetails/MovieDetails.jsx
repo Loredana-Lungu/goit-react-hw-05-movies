@@ -30,33 +30,28 @@ const MovieDetails = () => {
   useEffect(() => {
     console.log(`Fetching details for movie ID: ${movieId}`);
     const fetchDetails = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
-              Accept: 'application/json',
-            },
-          }
-        );
+        try {
+            // Înlocuiește cu URL-ul care conține `api_key`
+            const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=b3fe8ad645f337f3fa9ceb8e5b164aa5`;
 
-          setMovie(response.data);
-          // resets the error state if the movie is found
-          setError(error);
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          console.log('Error 404, movie not found or invalid API key: ', error);
-        } else {
-            console.error('Error fetching details: ', error);
-            // sets the error state to true
-            setError(true);
+            const response = await axios.get(url);
+
+            setMovie(response.data);
+            // resets the error state if the movie is found
+            setError(false);
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log('Error 404, movie not found or invalid API key: ', error);
+            } else {
+                console.error('Error fetching details: ', error);
+                // sets the error state to true
+                setError(true);
+            }
         }
-      }
     };
 
     fetchDetails();
-  }, [movieId, error]);
+}, [movieId, error]);
 
   if (movie && Object.keys(movie)?.length === 0) {
     return (

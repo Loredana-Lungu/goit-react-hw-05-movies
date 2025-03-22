@@ -8,26 +8,22 @@ const Reviews = () => {
     const [reviews, setReviews] = useState([]);
     
     useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                const response = await axios.get(
-                  `https://api.themoviedb.org/3/movie/${movieId}/reviews`,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
-                      Accept: 'application/json',
-                    },
-                  }
-                );
-
-                setReviews(response.data.results);
-            } catch (error) {
-                console.error('Error fetching reviews: ', error);
-            }
-        };
-
-        fetchReviews();
-    }, [movieId]);
+      const fetchReviews = async () => {
+          try {
+              // URL actualizat cu cheia API direct în parametru
+              const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&api_key=b3fe8ad645f337f3fa9ceb8e5b164aa5`;
+  
+              const response = await axios.get(url);
+  
+              setReviews(response.data.results);
+          } catch (error) {
+              console.error('Error fetching reviews: ', error);
+          }
+      };
+  
+      fetchReviews();
+  }, [movieId]);
+  
 
     if (reviews.length === 0) {
         return (<div>No reviews available for this movie.</div>);

@@ -28,23 +28,12 @@ const Movies = () => {
     const handleSearchFilterSubmit = async event => {
         event.preventDefault();
         console.log('Submitting search query:', searchQuery);
-
+    
         try {
-            const response = await axios.get(
-                'https://api.themoviedb.org/3/search/movie',
-                {
-                    params: {
-                        query: searchQuery,
-                        include_adult: false,
-                        language: 'en-US',
-                        page: 1,
-                    },
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
-                        Accept: 'application/json',
-                    },
-                }
-            );
+            // URL actualizat cu cheia API direct în parametru
+            const url = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1&api_key=b3fe8ad645f337f3fa9ceb8e5b164aa5`;
+    
+            const response = await axios.get(url);
             console.log('Fetched movies:', response.data.results);
             setSearchResults(response.data.results);
             setError(false);
@@ -54,6 +43,7 @@ const Movies = () => {
             setSearchResults([]);
         }
     };
+    
 
     const handleSearchValueChange = event => {
         setSearchQuery(event.target.value);

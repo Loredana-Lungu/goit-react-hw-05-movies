@@ -9,15 +9,10 @@ const Home = () => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-               const response = await axios.get(
-              'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
-              {
-                headers: {
-                  Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
-                  Accept: 'application/json',
-                }
-              }
-              );
+                // URL actualizat cu cheia API direct în parametru
+                const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=b3fe8ad645f337f3fa9ceb8e5b164aa5`;
+
+                const response = await axios.get(url);
                 setMovies(response.data.results);
             } catch (error) {
                 console.error("Error fetching movies: ", error);
